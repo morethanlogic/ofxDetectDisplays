@@ -45,12 +45,20 @@ int ofxDetectDisplays::detectDisplays()
 
 #ifdef TARGET_OSX
     CGDisplayCount displayCount;
-    CGDirectDisplayID displays[32];
-    CGGetActiveDisplayList(32, displays, &displayCount);
+    CGDirectDisplayID displaysID[32];
+    CGGetActiveDisplayList(32, displaysID, &displayCount);
 
     for (int i=0; i<displayCount; i++) {
-        cout<< i << " - display ID: " << displays[i] << " - display size: " << CGDisplayPixelsWide(displays[i]) << " - " <<  CGDisplayPixelsHigh(displays[i]) << endl;
+        cout<< i << " - display ID: " << displaysID[i] << " - display size: " << CGDisplayPixelsWide(displaysID[i]) << " - " <<  CGDisplayPixelsHigh(displaysID[i]) << endl;
+        
+        DisplayInfo* displayInfo = new DisplayInfo();
+        displayInfo->width = CGDisplayPixelsWide(displaysID[i]);
+        displayInfo->height = CGDisplayPixelsHigh(displaysID[i]);
+        
+        displays.push_back(displayInfo);
     }
+    
+    return displayCount;
     
 #endif
     
