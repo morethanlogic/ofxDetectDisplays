@@ -3,7 +3,7 @@ ofxDetectDisplays
 
 Introduction
 ------------
-C++ openFrameworks addon to ...
+openFrameworks addon to enumerate display monitors. Currently works on OS X and Windows.
 
 Licence
 -------
