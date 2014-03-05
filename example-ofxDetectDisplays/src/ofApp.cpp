@@ -8,7 +8,7 @@ void ofApp::setup(){
 	cout << "Nb of displays::" <<  detectDisplays.displays.size() << endl;
 
 	for (int i=0; i<detectDisplays.displays.size(); i++) {
-		cout << detectDisplays.displays[i]->width << " - " << detectDisplays.displays[i]->width << endl;
+		cout << detectDisplays.displays[i]->width << " - " << detectDisplays.displays[i]->height << endl;
 	}
 	
 
