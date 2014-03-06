@@ -3,7 +3,6 @@
 //--------------------------------------------------------------
 //--------------------------------------------------------------
 #ifdef TARGET_WIN32
-
 struct DisplaysParam {
 	int count;
 	vector<DisplayInfo*> * displays;
@@ -55,7 +54,7 @@ int ofxDetectDisplays::detectDisplays()
         displayInfo->width = CGDisplayPixelsWide(displaysID[i]);
         displayInfo->height = CGDisplayPixelsHigh(displaysID[i]);
         
-        displays.push_back(displayInfo);
+        _displays.push_back(displayInfo);
     }
     
     return displayCount;
@@ -65,7 +64,7 @@ int ofxDetectDisplays::detectDisplays()
 #ifdef TARGET_WIN32
 	DisplaysParam displaysParam;
 	displaysParam.count = 0;
-	displaysParam.displays = &displays;
+	displaysParam.displays = &_displays;
 
     if (EnumDisplayMonitors(NULL, NULL, monitorEnumProc, (LPARAM)&displaysParam)) {
 		return displaysParam.count;
@@ -74,6 +73,36 @@ int ofxDetectDisplays::detectDisplays()
 
 #endif
 
+}
+
+//--------------------------------------------------------------
+int ofxDetectDisplays::getNumDisplays()
+{
+    return _displays.size();
+}
+
+//--------------------------------------------------------------
+ofRectangle ofxDetectDisplays::getDisplayFrame(int displayID)
+{
+    int top = 0;
+    int left = 0;
+    int width = 0;
+    int height = 0;
+    
+    if (_displays.size() > 0 && displayID >= 0 && displayID < _displays.size()) {
+        top = 0;
+        left = 0;
+        width = _displays[displayID]->width;
+        height = _displays[displayID]->height;
+    }
+    
+    return ofRectangle(.0f, .0f, width, height);
+}
+
+//--------------------------------------------------------------
+const vector<DisplayInfo*> & ofxDetectDisplays::getDisplays()
+{
+    return _displays;
 }
 
 

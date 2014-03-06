@@ -17,7 +17,13 @@ class ofxDetectDisplays {
         ~ofxDetectDisplays();
     
         int detectDisplays();
-		vector<DisplayInfo*> displays;
+    
+        int getNumDisplays();
+        ofRectangle getDisplayFrame(int displayID);
+    
+        const vector<DisplayInfo*> & getDisplays();
 
     private:
+        vector<DisplayInfo*> _displays;
+
 };
