@@ -60,9 +60,9 @@ void ofxDetectDisplays::update(ofEventArgs & args)
 //--------------------------------------------------------------
 int ofxDetectDisplays::detectDisplays()
 {
-    _actionOnDisplayID = false;
+    _actionOnDisplayID = -1;
     _doPlaceWindowNextCycle = false;
-    _doFullscreenWindowNextCycle = -1;
+    _doFullscreenWindowNextCycle = false;
     
 #ifdef TARGET_OSX
     CGDisplayCount displayCount;
