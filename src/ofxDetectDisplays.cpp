@@ -110,7 +110,23 @@ ofRectangle ofxDetectDisplays::getDisplayBounds(int displayID)
 //--------------------------------------------------------------
 bool ofxDetectDisplays::isDisplayPrimary(int displayID)
 {
+    if (_displays.size() == 0 || displayID > _displays.size()-1) {
+        return false;
+    }
+    
     return _displays[displayID]->isPrimary;
+}
+
+//--------------------------------------------------------------
+bool ofxDetectDisplays::isMirroringEnabled()
+{
+#ifdef TARGET_OSX
+    return CGDisplayIsInMirrorSet(CGMainDisplayID());
+#endif
+    
+#ifdef TARGET_WIN32
+    
+#endif
 }
 
 //--------------------------------------------------------------

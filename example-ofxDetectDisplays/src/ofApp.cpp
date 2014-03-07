@@ -15,7 +15,9 @@ void ofApp::draw(){
     
     string mess = "";
     
-    mess = "Number of displays: " + ofToString(detectDisplays.getNumDisplays()) + "\n\n";
+    mess = "Number of displays: " + ofToString(detectDisplays.getNumDisplays()) + "\n";
+    
+    mess += "Is mirroring enabled: " + ofToString(detectDisplays.isMirroringEnabled()) + "\n\n";
     
 	for (int i=0; i<detectDisplays.getDisplays().size(); i++) {
         ofRectangle displayBounds = detectDisplays.getDisplayBounds(i);

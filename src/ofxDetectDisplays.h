@@ -25,6 +25,7 @@ class ofxDetectDisplays {
         int getNumDisplays();
         ofRectangle getDisplayBounds(int displayID);
         bool isDisplayPrimary(int displayID);
+        bool isMirroringEnabled();
     
         const vector<DisplayInfo*> & getDisplays();
 
