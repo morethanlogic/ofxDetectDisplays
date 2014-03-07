@@ -1,3 +1,1 @@
-ofxXmlSettings
-ofxUI
-ofxMSAInteractiveObject
+ofxDetectDisplays

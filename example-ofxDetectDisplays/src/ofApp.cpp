@@ -2,16 +2,7 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-
 	detectDisplays.detectDisplays();
-
-	cout << "Nb of displays::" <<  detectDisplays.displays.size() << endl;
-
-	for (int i=0; i<detectDisplays.displays.size(); i++) {
-		cout << detectDisplays.displays[i]->width << " - " << detectDisplays.displays[i]->height << endl;
-	}
-	
-
 }
 
 //--------------------------------------------------------------
@@ -21,6 +12,22 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
+    
+    string mess = "";
+    
+    mess = "Number of displays: " + ofToString(detectDisplays.getNumDisplays()) + "\n\n";
+    
+	for (int i=0; i<detectDisplays.getDisplays().size(); i++) {
+        ofRectangle displayBounds = detectDisplays.getDisplayBounds(i);
+        
+        mess += "Display " + ofToString(i) + "\n";
+        mess += "Primary :" + ofToString(detectDisplays.isDisplayPrimary(i)) + "\n";
+        mess += "Origin: " + ofToString(displayBounds.x) + " - " + ofToString(displayBounds.y) + "\n";
+        mess += "Size: " + ofToString(displayBounds.width) + " - " + ofToString(displayBounds.height) + "\n\n";
+	}
+    
+    ofSetColor(0);
+    ofDrawBitmapString(mess, 10, 20);
 
 }
 
