@@ -1,9 +1,13 @@
 #pragma once
 
-// OF
 #include "ofMain.h"
 
+//--------------------------------------------------------------
+//--------------------------------------------------------------
 struct DisplayInfo {
+    bool isPrimary;
+    int left;
+    int top;
 	int width;
 	int height;
 };
@@ -19,7 +23,8 @@ class ofxDetectDisplays {
         int detectDisplays();
     
         int getNumDisplays();
-        ofRectangle getDisplayFrame(int displayID);
+        ofRectangle getDisplayBounds(int displayID);
+        bool isDisplayPrimary(int displayID);
     
         const vector<DisplayInfo*> & getDisplays();
 
