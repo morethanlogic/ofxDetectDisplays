@@ -20,6 +20,8 @@ class ofxDetectDisplays {
         ofxDetectDisplays();
         ~ofxDetectDisplays();
     
+        void update(ofEventArgs & args);
+    
         int detectDisplays();
     
         int getNumDisplays();
@@ -28,8 +30,15 @@ class ofxDetectDisplays {
         bool isMirroringEnabled();
     
         const vector<DisplayInfo*> & getDisplays();
+    
+        bool placeWindowOnDisplay(int displayID);
+        bool fullscreenWindowOnDisplay(int displayID);
 
     private:
         vector<DisplayInfo*> _displays;
+    
+        int _actionOnDisplayID;
+        bool _doPlaceWindowNextCycle;
+        bool _doFullscreenWindowNextCycle;
 
 };
