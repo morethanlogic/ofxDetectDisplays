@@ -37,46 +37,19 @@ BOOL CALLBACK monitorEnumProc(HMONITOR hMonitor, HDC hdcMonitor, LPRECT lprcMoni
 //--------------------------------------------------------------
 ofxDetectDisplays::ofxDetectDisplays()
 {
-#if defined(TARGET_OSX)
-    ofAddListener(ofEvents().update, this, &ofxDetectDisplays::update);
-#endif
 
-    while(!_displays.empty()) delete _displays.back(), _displays.pop_back();
-	_displays.clear();
 }
 
 //--------------------------------------------------------------
 ofxDetectDisplays::~ofxDetectDisplays()
 {
-#if defined(TARGET_OSX)
-    ofRemoveListener(ofEvents().update, this, &ofxDetectDisplays::update);
-#endif
-}
-
-//--------------------------------------------------------------
-void ofxDetectDisplays::update(ofEventArgs & args)
-{
-#if defined(TARGET_OSX)
-    if(_doPlaceWindowNextCycle && _actionOnDisplayID >= 0) {
-        placeWindowOnDisplay(_actionOnDisplayID);
-        _doPlaceWindowNextCycle = false;
-        _actionOnDisplayID = -1;
-    }
-    
-    if (_doFullscreenWindowNextCycle && _actionOnDisplayID >= 0) {
-        fullscreenWindowOnDisplay(_actionOnDisplayID);
-        _doFullscreenWindowNextCycle = false;
-        _actionOnDisplayID = -1;
-    }
-#endif
+    while(!_displays.empty()) delete _displays.back(), _displays.pop_back();
+	_displays.clear();
 }
 
 //--------------------------------------------------------------
 int ofxDetectDisplays::detectDisplays()
 {
-    _actionOnDisplayID = -1;
-    _doPlaceWindowNextCycle = false;
-    _doFullscreenWindowNextCycle = false;
     
 #if defined(TARGET_OSX)
     CGDisplayCount displayCount;
@@ -173,14 +146,7 @@ bool ofxDetectDisplays::placeWindowOnDisplay(int displayID)
 {
 
 #if defined(TARGET_OSX)
-	// All the following can not be done in the same cycle, this is why we split method on 2 cycles when we are in fullscreen
-    if (ofGetWindowMode() == OF_FULLSCREEN) {
-        ofSetFullscreen(false);
-        _doPlaceWindowNextCycle = true;
-        _actionOnDisplayID = displayID;
-        return false;
-    }
-
+    ofSetFullscreen(false);
     ofSetWindowPosition(_displays[displayID]->left, _displays[displayID]->top);
     ofSetWindowShape(_displays[displayID]->width, _displays[displayID]->height);
 
@@ -201,17 +167,9 @@ bool ofxDetectDisplays::placeWindowOnDisplay(int displayID)
 bool ofxDetectDisplays::fullscreenWindowOnDisplay(int displayID)
 {
 #if defined(TARGET_OSX)
-	// All the following can not be done in the same cycle, this is why we split method on 2 cycles when we are in fullscreen
-    if (ofGetWindowMode() == OF_FULLSCREEN) {
-        ofSetFullscreen(false);
-        _doFullscreenWindowNextCycle = true;
-        _actionOnDisplayID = displayID;
-        return false;
-    }
-
-	int offset = 1; // if we just move the windows to the top left corner of the display, it will go back to the primary display when going fullscreen.
-    ofSetWindowPosition(_displays[displayID]->left + offset, _displays[displayID]->top + offset);
     ofSetFullscreen(true);
+    ofSetWindowShape(_displays[displayID]->width, _displays[displayID]->height);
+    ofSetWindowPosition(_displays[displayID]->left, _displays[displayID]->top);
 
 #elif defined(TARGET_WIN32)
 	HWND hwnd = ofGetWin32Window();
@@ -223,7 +181,3 @@ bool ofxDetectDisplays::fullscreenWindowOnDisplay(int displayID)
 
     return true;
 }
-
-
-
-

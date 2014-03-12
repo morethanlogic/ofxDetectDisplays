@@ -19,9 +19,7 @@ class ofxDetectDisplays {
     public:    
         ofxDetectDisplays();
         ~ofxDetectDisplays();
-    
-        void update(ofEventArgs & args);
-    
+        
         int detectDisplays();
     
         int getNumDisplays();
@@ -36,9 +34,5 @@ class ofxDetectDisplays {
 
     private:
         vector<DisplayInfo*> _displays;
-    
-        int _actionOnDisplayID;
-        bool _doPlaceWindowNextCycle;
-        bool _doFullscreenWindowNextCycle;
 
 };
