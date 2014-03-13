@@ -11,6 +11,7 @@ struct DisplaysParam {
 BOOL CALLBACK monitorEnumProc(HMONITOR hMonitor, HDC hdcMonitor, LPRECT lprcMonitor, LPARAM dwData)
 {
 	MONITORINFO mi;
+	mi.cbSize = sizeof(MONITORINFO);
 	GetMonitorInfo(hMonitor, &mi);
 
 	DisplayInfo* displayInfo = new DisplayInfo();
