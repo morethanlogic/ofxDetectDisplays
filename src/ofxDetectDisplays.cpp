@@ -2,7 +2,7 @@
 
 //--------------------------------------------------------------
 //--------------------------------------------------------------
-#ifdef TARGET_WIN32
+#if defined(TARGET_WIN32)
 struct DisplaysParam {
 	int count;
 	vector<DisplayInfo*> * displays;
