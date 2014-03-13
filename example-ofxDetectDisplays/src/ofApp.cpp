@@ -34,6 +34,12 @@ void ofApp::draw(){
         ofRectangle displayBounds = detectDisplays.getDisplayBounds(i);
         ofRectangle displayDebugFrame = ofRectangle(xOffset, yOffset, displayBounds.width/10, displayBounds.height/10);
         
+        
+        if (detectDisplays.isDisplayPrimary(i)) {
+            ofSetColor(255, 0, 0);
+            ofRect(displayDebugFrame.x - 3, displayDebugFrame.y - 3, displayDebugFrame.width + 6, displayDebugFrame.height + 6);
+        }
+        
         ofSetColor(0);
         ofRect(displayDebugFrame);
         
