@@ -132,6 +132,7 @@ bool ofxDetectDisplays::isMirroringEnabled()
     return CGDisplayIsInMirrorSet(CGMainDisplayID());
 
 #elif defined(TARGET_WIN32)
+	// have not found yet how to do this on Windows
 	return false;
 #endif
 }
