@@ -9,6 +9,7 @@ int lastReconfigEventFrame = 0;
 void OnDisplayReconfigurationCallBack(CGDirectDisplayID display, CGDisplayChangeSummaryFlags flags, void *userInfo)
 {
     if (lastReconfigEventFrame != ofGetFrameNum()) {
+        ofxDetectDisplaysSharedInstance().detectDisplays();
         ofNotifyEvent(ofxDetectDisplaysSharedInstance().displayConfigurationChanged);
         lastReconfigEventFrame = ofGetFrameNum();
     }
@@ -67,6 +68,8 @@ ofxDetectDisplays::ofxDetectDisplays()
 #if defined(TARGET_OSX)
     CGDisplayRegisterReconfigurationCallback(OnDisplayReconfigurationCallBack, NULL);
 #endif
+    
+    detectDisplays();
 }
 
 //--------------------------------------------------------------
