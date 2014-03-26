@@ -24,19 +24,19 @@ void ofApp::draw()
     // You can also get the shared instance as a pointer.
     //ofxDetectDisplays* detectDisplays = ofxDetectDisplays::sharedInstance();
     
-    string mess = "";
-    
-    mess = "Number of displays: " + ofToString(detectDisplays.getNumDisplays()) + "\n";
-    mess += "Is mirroring enabled: " + ofToString(detectDisplays.isMirroringEnabled()) + "\n\n";
+    string msg = "";
+    msg = "Number of displays: " + ofToString(detectDisplays.getNumDisplays()) + "\n";
+    msg += "Is mirroring enabled: " + ofToString(detectDisplays.isMirroringEnabled()) + "\n";
+	msg += "Left-click on a display button to move to it, right-click to go fullscreen.";
     
     ofSetColor(0);
-    ofDrawBitmapString(mess, 10, 20);
+    ofDrawBitmapString(msg, 10, 20);
     
     int xOffset = 10;
-    int yOffset = 50;
+    int yOffset = 70;
     
 	for (int i=0; i<detectDisplays.getDisplays().size(); i++) {
-        mess = "";
+        msg = "";
         
         ofRectangle displayBounds = detectDisplays.getDisplayBounds(i);
         ofRectangle displayDebugFrame = ofRectangle(xOffset, yOffset, displayBounds.width/10, displayBounds.height/10);
@@ -50,13 +50,13 @@ void ofApp::draw()
         ofSetColor(0);
         ofRect(displayDebugFrame);
         
-        mess += "Display " + ofToString(i) + "\n";
-        mess += "Primary :" + ofToString(detectDisplays.isDisplayPrimary(i)) + "\n";
-        mess += "Origin: " + ofToString(displayBounds.x) + " - " + ofToString(displayBounds.y) + "\n";
-        mess += "Size: " + ofToString(displayBounds.width) + " - " + ofToString(displayBounds.height) + "\n\n";
+        msg += "Display " + ofToString(i) + "\n";
+        msg += "Primary :" + ofToString(detectDisplays.isDisplayPrimary(i)) + "\n";
+        msg += "Origin: " + ofToString(displayBounds.x) + " - " + ofToString(displayBounds.y) + "\n";
+        msg += "Size: " + ofToString(displayBounds.width) + " - " + ofToString(displayBounds.height) + "\n\n";
         
         ofSetColor(0);
-        ofDrawBitmapString(mess, xOffset, yOffset + displayBounds.height/10 + 20);
+        ofDrawBitmapString(msg, xOffset, yOffset + displayBounds.height/10 + 20);
         
         xOffset += 20 + displayBounds.width/10;
         
