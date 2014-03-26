@@ -21,6 +21,8 @@ public:
     ~ofxDetectDisplays();
     
     int detectDisplays();
+    void clearDisplays();
+
     int getNumDisplays();
     ofRectangle getDisplayBounds(int displayID);
     bool isDisplayPrimary(int displayID);

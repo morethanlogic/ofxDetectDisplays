@@ -44,13 +44,13 @@ ofxDetectDisplays::ofxDetectDisplays()
 //--------------------------------------------------------------
 ofxDetectDisplays::~ofxDetectDisplays()
 {
-    while(!_displays.empty()) delete _displays.back(), _displays.pop_back();
-	_displays.clear();
+    clearDisplays();
 }
 
 //--------------------------------------------------------------
 int ofxDetectDisplays::detectDisplays()
 {
+    clearDisplays();
     
 #if defined(TARGET_OSX)
     CGDisplayCount displayCount;
@@ -88,7 +88,13 @@ int ofxDetectDisplays::detectDisplays()
     return -1;
 
 #endif
+}
 
+//--------------------------------------------------------------
+void ofxDetectDisplays::clearDisplays()
+{
+    while (!displays.empty()) delete displays.back(), displays.pop_back();
+	displays.clear();
 }
 
 //--------------------------------------------------------------
