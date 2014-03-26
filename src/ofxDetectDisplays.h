@@ -3,8 +3,8 @@
 #include "ofMain.h"
 
 //--------------------------------------------------------------
-//--------------------------------------------------------------
-struct DisplayInfo {
+struct DisplayInfo
+{
     bool isPrimary;
     int left;
     int top;
@@ -13,26 +13,26 @@ struct DisplayInfo {
 };
 
 //--------------------------------------------------------------
-//--------------------------------------------------------------
-class ofxDetectDisplays {
+class ofxDetectDisplays
+{
+public:
     
-    public:    
-        ofxDetectDisplays();
-        ~ofxDetectDisplays();
-        
-        int detectDisplays();
+    ofxDetectDisplays();
+    ~ofxDetectDisplays();
     
-        int getNumDisplays();
-        ofRectangle getDisplayBounds(int displayID);
-        bool isDisplayPrimary(int displayID);
-        bool isMirroringEnabled();
-    
-        const vector<DisplayInfo*> & getDisplays();
-    
-        bool placeWindowOnDisplay(int displayID);
-        bool fullscreenWindowOnDisplay(int displayID);
+    int detectDisplays();
+    int getNumDisplays();
+    ofRectangle getDisplayBounds(int displayID);
+    bool isDisplayPrimary(int displayID);
+    bool isMirroringEnabled();
 
-    private:
-        vector<DisplayInfo*> _displays;
+    const vector<DisplayInfo*> & getDisplays();
 
+    bool placeWindowOnDisplay(int displayID);
+    bool fullscreenWindowOnDisplay(int displayID);
+    
+
+private:
+    vector<DisplayInfo*> displays;
 };
+

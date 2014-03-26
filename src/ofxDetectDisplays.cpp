@@ -72,7 +72,7 @@ int ofxDetectDisplays::detectDisplays()
         displayInfo->width = displayRect.size.width;
         displayInfo->height = displayRect.size.height;
     
-        _displays.push_back(displayInfo);
+        displays.push_back(displayInfo);
     }
     
     return displayCount;
@@ -80,7 +80,7 @@ int ofxDetectDisplays::detectDisplays()
 #elif defined(TARGET_WIN32)
 	DisplaysParam displaysParam;
 	displaysParam.count = 0;
-	displaysParam.displays = &_displays;
+	displaysParam.displays = &displays;
 
     if (EnumDisplayMonitors(NULL, NULL, monitorEnumProc, (LPARAM)&displaysParam)) {
 		return displaysParam.count;
@@ -94,7 +94,7 @@ int ofxDetectDisplays::detectDisplays()
 //--------------------------------------------------------------
 int ofxDetectDisplays::getNumDisplays()
 {
-    return _displays.size();
+    return displays.size();
 }
 
 //--------------------------------------------------------------
@@ -105,11 +105,11 @@ ofRectangle ofxDetectDisplays::getDisplayBounds(int displayID)
     int width = 0;
     int height = 0;
     
-    if (_displays.size() > 0 && displayID >= 0 && displayID < _displays.size()) {
-        left = _displays[displayID]->left;
-        top = _displays[displayID]->top;
-        width = _displays[displayID]->width;
-        height = _displays[displayID]->height;
+    if (displays.size() > 0 && displayID >= 0 && displayID < displays.size()) {
+        left = displays[displayID]->left;
+        top = displays[displayID]->top;
+        width = displays[displayID]->width;
+        height = displays[displayID]->height;
     }
     
     return ofRectangle(left, top, width, height);
@@ -118,11 +118,11 @@ ofRectangle ofxDetectDisplays::getDisplayBounds(int displayID)
 //--------------------------------------------------------------
 bool ofxDetectDisplays::isDisplayPrimary(int displayID)
 {
-    if (_displays.size() == 0 || displayID > _displays.size()-1) {
+    if (displays.size() == 0 || displayID > displays.size()-1) {
         return false;
     }
     
-    return _displays[displayID]->isPrimary;
+    return displays[displayID]->isPrimary;
 }
 
 //--------------------------------------------------------------
@@ -140,7 +140,7 @@ bool ofxDetectDisplays::isMirroringEnabled()
 //--------------------------------------------------------------
 const vector<DisplayInfo*> & ofxDetectDisplays::getDisplays()
 {
-    return _displays;
+    return displays;
 }
 
 //--------------------------------------------------------------
@@ -149,8 +149,8 @@ bool ofxDetectDisplays::placeWindowOnDisplay(int displayID)
 
 #if defined(TARGET_OSX)
     ofSetFullscreen(false);
-    ofSetWindowPosition(_displays[displayID]->left, _displays[displayID]->top);
-    ofSetWindowShape(_displays[displayID]->width, _displays[displayID]->height);
+    ofSetWindowPosition(displays[displayID]->left, displays[displayID]->top);
+    ofSetWindowShape(displays[displayID]->width, displays[displayID]->height);
 
 #elif defined(TARGET_WIN32)
 	HWND hwnd = ofGetWin32Window();
@@ -159,7 +159,7 @@ bool ofxDetectDisplays::placeWindowOnDisplay(int displayID)
 	DWORD STYLE = WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX | WS_MAXIMIZEBOX | WS_CLIPCHILDREN | WS_CLIPSIBLINGS;
 	SetWindowLong(hwnd, GWL_EXSTYLE, EX_STYLE);
 	SetWindowLong(hwnd, GWL_STYLE, STYLE);
-	SetWindowPos(hwnd, HWND_TOPMOST, _displays[displayID]->left, _displays[displayID]->top, _displays[displayID]->width, _displays[displayID]->height, SWP_SHOWWINDOW);
+	SetWindowPos(hwnd, HWND_TOPMOST, displays[displayID]->left, displays[displayID]->top, displays[displayID]->width, displays[displayID]->height, SWP_SHOWWINDOW);
 #endif
 
 	return true;
@@ -170,15 +170,15 @@ bool ofxDetectDisplays::fullscreenWindowOnDisplay(int displayID)
 {
 #if defined(TARGET_OSX)
     ofSetFullscreen(true);
-    ofSetWindowShape(_displays[displayID]->width, _displays[displayID]->height);
-    ofSetWindowPosition(_displays[displayID]->left, _displays[displayID]->top);
+    ofSetWindowShape(displays[displayID]->width, displays[displayID]->height);
+    ofSetWindowPosition(displays[displayID]->left, displays[displayID]->top);
 
 #elif defined(TARGET_WIN32)
 	HWND hwnd = ofGetWin32Window();
  
 	SetWindowLong(hwnd, GWL_EXSTYLE, 0);
   	SetWindowLong(hwnd, GWL_STYLE, WS_POPUP | WS_CLIPCHILDREN | WS_CLIPSIBLINGS);
-	SetWindowPos(hwnd, HWND_TOPMOST, _displays[displayID]->left, _displays[displayID]->top, _displays[displayID]->width, _displays[displayID]->height, SWP_SHOWWINDOW);
+	SetWindowPos(hwnd, HWND_TOPMOST, displays[displayID]->left, displays[displayID]->top, displays[displayID]->width, displays[displayID]->height, SWP_SHOWWINDOW);
 #endif
 
     return true;

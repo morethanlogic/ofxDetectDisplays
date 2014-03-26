@@ -3,7 +3,6 @@
 bool _bMouseLeftButtonPressed = false;
 bool _bMouseRightButtonPressed = false;
 
-
 //--------------------------------------------------------------
 void ofApp::setup()
 {
