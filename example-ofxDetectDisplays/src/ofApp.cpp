@@ -6,6 +6,9 @@ bool _bMouseRightButtonPressed = false;
 //--------------------------------------------------------------
 void ofApp::setup()
 {
+    // You should only use the shared instance of ofxDetectDisplays,
+    // otherwise event registration will be messed up.
+    ofAddListener(ofxDetectDisplaysSharedInstance().displayConfigurationChanged, this, &ofApp::displayConfigurationChanged);
     ofxDetectDisplaysSharedInstance().detectDisplays();
 }
 
@@ -129,4 +132,10 @@ void ofApp::gotMessage(ofMessage msg)
 void ofApp::dragEvent(ofDragInfo dragInfo)
 {
 
+}
+
+//--------------------------------------------------------------
+void ofApp::displayConfigurationChanged()
+{
+    ofxDetectDisplaysSharedInstance().detectDisplays();
 }

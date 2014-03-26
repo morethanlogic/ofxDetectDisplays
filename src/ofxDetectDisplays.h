@@ -34,6 +34,7 @@ public:
     bool placeWindowOnDisplay(int displayID);
     bool fullscreenWindowOnDisplay(int displayID);
     
+    ofEvent<void> displayConfigurationChanged;
 
 private:
     vector<DisplayInfo*> displays;

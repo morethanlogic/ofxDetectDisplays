@@ -1,13 +1,29 @@
 #include "ofxDetectDisplays.h"
 
+#if defined(TARGET_OSX)
+
 //--------------------------------------------------------------
+int lastReconfigEventFrame = 0;
+
 //--------------------------------------------------------------
-#if defined(TARGET_WIN32)
-struct DisplaysParam {
+void OnDisplayReconfigurationCallBack(CGDirectDisplayID display, CGDisplayChangeSummaryFlags flags, void *userInfo)
+{
+    if (lastReconfigEventFrame != ofGetFrameNum()) {
+        ofNotifyEvent(ofxDetectDisplaysSharedInstance().displayConfigurationChanged);
+        lastReconfigEventFrame = ofGetFrameNum();
+    }
+}
+
+#elif defined(TARGET_WIN32)
+
+//--------------------------------------------------------------
+struct DisplaysParam
+{
 	int count;
 	vector<DisplayInfo*> * displays;
 };
 
+//--------------------------------------------------------------
 BOOL CALLBACK monitorEnumProc(HMONITOR hMonitor, HDC hdcMonitor, LPRECT lprcMonitor, LPARAM dwData)
 {
 	MONITORINFO mi;
@@ -32,6 +48,7 @@ BOOL CALLBACK monitorEnumProc(HMONITOR hMonitor, HDC hdcMonitor, LPRECT lprcMoni
 
     return TRUE;
 }
+
 #endif
 
 //--------------------------------------------------------------
@@ -47,13 +64,19 @@ ofxDetectDisplays* ofxDetectDisplays::sharedInstance()
 //--------------------------------------------------------------
 ofxDetectDisplays::ofxDetectDisplays()
 {
-
+#if defined(TARGET_OSX)
+    CGDisplayRegisterReconfigurationCallback(OnDisplayReconfigurationCallBack, NULL);
+#endif
 }
 
 //--------------------------------------------------------------
 ofxDetectDisplays::~ofxDetectDisplays()
 {
     clearDisplays();
+
+#if defined(TARGET_OSX)
+    CGDisplayRemoveReconfigurationCallback(OnDisplayReconfigurationCallBack, NULL);
+#endif
 }
 
 //--------------------------------------------------------------
