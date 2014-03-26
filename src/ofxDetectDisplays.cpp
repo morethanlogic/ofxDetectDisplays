@@ -3,15 +3,22 @@
 #if defined(TARGET_OSX)
 
 //--------------------------------------------------------------
-int lastReconfigEventFrame = 0;
+int lastReconfigMillis = 0;
 
 //--------------------------------------------------------------
 void OnDisplayReconfigurationCallBack(CGDirectDisplayID display, CGDisplayChangeSummaryFlags flags, void *userInfo)
 {
-    if (lastReconfigEventFrame != ofGetFrameNum()) {
+    // Ignore some event flags.
+    flags &= ~kCGDisplayBeginConfigurationFlag;
+    flags &= ~kCGDisplayDesktopShapeChangedFlag;
+    if (flags == 0) return;
+    
+    // This callback gets called for each screen, so let's make sure to only trigger
+    // the event once per change.
+    if (lastReconfigMillis != ofGetElapsedTimeMillis()) {
+        lastReconfigMillis = ofGetElapsedTimeMillis();
         ofxDetectDisplaysSharedInstance().detectDisplays();
         ofNotifyEvent(ofxDetectDisplaysSharedInstance().displayConfigurationChanged);
-        lastReconfigEventFrame = ofGetFrameNum();
     }
 }
 
