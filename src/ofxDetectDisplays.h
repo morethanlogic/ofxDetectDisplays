@@ -16,6 +16,7 @@ struct DisplayInfo
 class ofxDetectDisplays
 {
 public:
+    static ofxDetectDisplays* sharedInstance();
     
     ofxDetectDisplays();
     ~ofxDetectDisplays();
@@ -38,3 +39,5 @@ private:
     vector<DisplayInfo*> displays;
 };
 
+//--------------------------------------------------------------
+ofxDetectDisplays& ofxDetectDisplaysSharedInstance();

@@ -35,6 +35,15 @@ BOOL CALLBACK monitorEnumProc(HMONITOR hMonitor, HDC hdcMonitor, LPRECT lprcMoni
 #endif
 
 //--------------------------------------------------------------
+ofxDetectDisplays* ofxDetectDisplays::sharedInstance()
+{
+    static ofxDetectDisplays* instance = NULL;
+    if (instance == NULL) {
+        instance = new ofxDetectDisplays();
+    }
+    return instance;
+}
+
 //--------------------------------------------------------------
 ofxDetectDisplays::ofxDetectDisplays()
 {
@@ -188,4 +197,10 @@ bool ofxDetectDisplays::fullscreenWindowOnDisplay(int displayID)
 #endif
 
     return true;
+}
+
+//--------------------------------------------------------------
+ofxDetectDisplays& ofxDetectDisplaysSharedInstance()
+{
+    return *ofxDetectDisplays::sharedInstance();
 }
