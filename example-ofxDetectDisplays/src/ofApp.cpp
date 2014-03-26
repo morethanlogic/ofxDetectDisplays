@@ -8,6 +8,7 @@ void ofApp::setup()
 {
     // You should only use the shared instance of ofxDetectDisplays,
     // otherwise event registration will be messed up.
+	// Events only works on Mac for now.
     ofAddListener(ofxDetectDisplaysSharedInstance().displayConfigurationChanged, this, &ofApp::displayConfigurationChanged);
 }
 
