@@ -6,7 +6,7 @@ bool _bMouseRightButtonPressed = false;
 //--------------------------------------------------------------
 void ofApp::setup()
 {
-	detectDisplays.detectDisplays();
+    ofxDetectDisplaysSharedInstance().detectDisplays();
 }
 
 //--------------------------------------------------------------
@@ -18,6 +18,9 @@ void ofApp::update()
 //--------------------------------------------------------------
 void ofApp::draw()
 {
+    ofxDetectDisplays& detectDisplays = ofxDetectDisplaysSharedInstance();
+    // You can also get the shared instance as a pointer.
+    //ofxDetectDisplays* detectDisplays = ofxDetectDisplays::sharedInstance();
     
     string mess = "";
     
