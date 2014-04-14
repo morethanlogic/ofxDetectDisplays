@@ -104,6 +104,7 @@ int ofxDetectDisplays::detectDisplays()
         CGRect displayRect = CGDisplayBounds(displaysID[i]);
         
         DisplayInfo* displayInfo = new DisplayInfo();
+        displayInfo->UID = ofToString(displaysID[i]);
         displayInfo->isPrimary = false;
         if (displaysID[i] == mainDisplayID) {
             displayInfo->isPrimary = true;

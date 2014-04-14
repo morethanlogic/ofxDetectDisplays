@@ -5,6 +5,7 @@
 //--------------------------------------------------------------
 struct DisplayInfo
 {
+    string UID;
     bool isPrimary;
     int left;
     int top;
