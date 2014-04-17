@@ -57,6 +57,16 @@ BOOL CALLBACK monitorEnumProc(HMONITOR hMonitor, HDC hdcMonitor, LPRECT lprcMoni
     return TRUE;
 }
 
+//--------------------------------------------------------------
+// Convert a wide Unicode string to an UTF8 string
+string utf8_encode(const std::wstring &wstr)
+{
+    int size_needed = WideCharToMultiByte(CP_UTF8, 0, &wstr[0], (int)wstr.size(), NULL, 0, NULL, NULL);
+    std::string strTo( size_needed, 0 );
+    WideCharToMultiByte(CP_UTF8, 0, &wstr[0], (int)wstr.size(), &strTo[0], size_needed, NULL, NULL);
+    return strTo;
+}
+
 #endif
 
 //--------------------------------------------------------------
@@ -126,6 +136,28 @@ int ofxDetectDisplays::detectDisplays()
 	displaysParam.displays = &displays;
 
     if (EnumDisplayMonitors(NULL, NULL, monitorEnumProc, (LPARAM)&displaysParam)) {
+
+		int index=0;
+		DISPLAY_DEVICE dd;
+		dd.cb = sizeof(DISPLAY_DEVICE);
+
+		while (EnumDisplayDevices(NULL, index++, &dd, 0))
+		{
+			if (index-1 >= displaysParam.count) {
+				ofLogError() << "There is more 'devices' than 'monitors'.";
+			} else {
+				DISPLAY_DEVICE ddMon;
+				ddMon.cb = sizeof(DISPLAY_DEVICE);
+				int devMon=0;
+
+				while (EnumDisplayDevices(dd.DeviceName, devMon++, &ddMon, 0))
+				{
+					vector<string> result = ofSplitString(utf8_encode(ddMon.DeviceID), "\\");
+					displays[index-1]->UID = result[1] + "-" + result[3];
+				}
+			}
+		}
+
 		return displaysParam.count;
 	}
     return -1;
