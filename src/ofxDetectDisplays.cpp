@@ -144,7 +144,7 @@ int ofxDetectDisplays::detectDisplays()
 		while (EnumDisplayDevices(NULL, index++, &dd, 0))
 		{
 			if (index-1 >= displaysParam.count) {
-				ofLogError() << "There is more 'devices' than 'monitors'.";
+				ofLogWarning() << "There is more 'devices' than 'monitors'.";
 			} else {
 				DISPLAY_DEVICE ddMon;
 				ddMon.cb = sizeof(DISPLAY_DEVICE);
