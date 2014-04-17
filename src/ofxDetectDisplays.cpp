@@ -255,6 +255,8 @@ bool ofxDetectDisplays::fullscreenWindowOnDisplay(int displayID)
     ofSetWindowPosition(displays[displayID]->left, displays[displayID]->top);
 
 #elif defined(TARGET_WIN32)
+	ofSetFullscreen(true);
+
 	HWND hwnd = ofGetWin32Window();
  
 	SetWindowLong(hwnd, GWL_EXSTYLE, 0);
