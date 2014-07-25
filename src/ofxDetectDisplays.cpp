@@ -197,6 +197,22 @@ ofRectangle ofxDetectDisplays::getDisplayBounds(int displayID)
 }
 
 //--------------------------------------------------------------
+int ofxDetectDisplays::getPrimaryDisplayID()
+{
+	if (displays.size() == 0) {
+        return -1;
+    }
+
+	for (int i=0; displays.size(); i++) {
+		if (displays[i]->isPrimary) {
+			return i;
+		}
+	}
+
+	return -1;
+}
+
+//--------------------------------------------------------------
 bool ofxDetectDisplays::isDisplayPrimary(int displayID)
 {
     if (displays.size() == 0 || displayID > displays.size()-1) {

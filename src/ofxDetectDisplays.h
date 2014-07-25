@@ -27,6 +27,7 @@ public:
 
     int getNumDisplays();
     ofRectangle getDisplayBounds(int displayID);
+	int getPrimaryDisplayID();
     bool isDisplayPrimary(int displayID);
     bool isMirroringEnabled();
 
